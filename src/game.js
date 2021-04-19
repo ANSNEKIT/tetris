@@ -36,4 +36,58 @@ export default class Game {
     ],
   };
 
+  movePieceLeft() {
+    this.activePiece.x -= 1; 
+
+    if(this.isPieceOutOfBound()) {
+      this.activePiece.x += 1;
+    }
+  }
+
+  movePieceRight() {
+    this.activePiece.x += 1;
+
+    if(this.isPieceOutOfBound()) {
+      this.activePiece.x -= 1;
+    }
+  }
+
+  movePieceDown() {
+    this.activePiece.y += 1;
+
+    if(this.isPieceOutOfBound()) {
+      this.activePiece.y -= 1;
+      this.lockPiece();
+    }
+  }
+
+  isPieceOutOfBound() {
+    const {x: pieceX, y: pieceY, blocks} = this.activePiece;
+
+    for (let y = 0; y < blocks.length; y++) {
+      for (let x = 0; x < blocks[y].length; x++) {
+        if ( 
+          blocks[y][x] &&
+          (( this.playfield[pieceY + y] === undefined || this.playfield[pieceY + y][pieceX + x] === undefined ) || (this.playfield[pieceY + y][pieceX + x]))
+        ) {
+          return true;
+        }
+      }      
+    }
+    return false;
+  }
+
+  lockPiece() {
+    const {x: pieceX, y: pieceY, blocks} = this.activePiece;
+
+    for (let y = 0; y < blocks.length; y++) {
+      for (let x = 0; x < blocks[y].length; x++) {
+        if (blocks[y][x]) {
+          this.playfield[pieceY + y][pieceX + x] = blocks[y][x];
+        }
+        
+      }      
+    }
+  }
+
 }
