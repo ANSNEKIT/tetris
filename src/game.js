@@ -22,7 +22,10 @@ export default class Game {
 
     for (let y = 0; y < blocks.length; y++) {
       for (let x = 0; x < blocks[y].length; x++) {
-        playfield[pieceY + y][pieceX + x] = blocks[y][x];
+        if (blocks[y][x]) {
+          playfield[pieceY + y][pieceX + x] = blocks[y][x];
+        }
+        
       }
     }
     return {
@@ -55,21 +58,21 @@ export default class Game {
           [0, 0, 0, 0],
           [1, 1, 1, 1],
           [0, 0, 0, 0],
-          [0, 0, 0, 0],
+          [0, 0, 0, 0]
         ];
         break;
       case 'J':
         piece.blocks = [
           [0, 0, 0],
           [2, 2, 2],
-          [0, 0, 2],
+          [0, 0, 2]
         ];
         break;
       case 'L':
         piece.blocks = [
           [0, 0, 0],
           [3, 3, 3],
-          [3, 0, 0],
+          [3, 0, 0]
         ];
         break;
       case 'O':
@@ -77,28 +80,28 @@ export default class Game {
           [0, 0, 0, 0],
           [0, 4, 4, 0],
           [0, 4, 4, 0],
-          [0, 0, 0, 0],
+          [0, 0, 0, 0]
         ];
         break;
       case 'S':
         piece.blocks = [
           [0, 0, 0],
           [0, 5, 5],
-          [5, 5, 0],
+          [5, 5, 0]
         ];
         break;
       case 'T':
         piece.blocks = [
           [0, 0, 0],
           [6, 6, 6],
-          [0, 6, 0],
+          [0, 6, 0]
         ];
         break;
       case 'Z':
         piece.blocks = [
           [0, 0, 0],
           [7, 7, 0],
-          [0, 7, 7],
+          [0, 7, 7]
         ];
         break;
       default:
@@ -169,14 +172,16 @@ export default class Game {
 
   hasCollision() {
     const {x: pieceX, y: pieceY, blocks} = this.activePiece;
-
+  
     for (let y = 0; y < blocks.length; y++) {
       for (let x = 0; x < blocks[y].length; x++) {
-        if ( 
-          blocks[y][x] &&
-          (( this.playfield[pieceY + y] === undefined || this.playfield[pieceY + y][pieceX + x] === undefined ) ||
-           (this.playfield[pieceY + y][pieceX + x]))
-        ) {
+        const isBlock = Boolean(blocks[y][x]);
+        const isOutPlayfield = (
+          (this.playfield[pieceY + y] === undefined || this.playfield[pieceY + y][pieceX + x] === undefined) ||
+          this.playfield[pieceY + y][pieceX + x]
+        );        
+
+        if ( isBlock && isOutPlayfield  ) {
           return true;
         }
       }      
