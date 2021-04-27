@@ -1,5 +1,3 @@
-'use strict';
-
 export default class Game {
   static points = {
     '1': 40,
@@ -39,6 +37,10 @@ export default class Game {
       }
     }
     return {
+      level: this.score,
+      lines: this.lines,
+      score: this.score,
+      nextPiece: this.nextPiece,
       playfield,
     };
   }
