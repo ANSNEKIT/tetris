@@ -1,5 +1,6 @@
 import Game from './src/game.js';
 import View from './src/view.js';
+import Controller from './src/controller.js';
 
 const $root = document.getElementById('root');
 const options = {
@@ -11,28 +12,9 @@ const options = {
 
 const game = new Game();
 const view = new View($root, options);
+const controller = new Controller(game, view);
 
 window.game = game;
 window.view = view;
+window.controller = controller;
 
-
-document.addEventListener('keydown', (evt) => {
-  switch (evt.key) {
-    case 'ArrowDown': 
-      game.movePieceDown();
-      view.render(game.getState());
-      break;
-    case 'ArrowLeft':
-      game.movePieceLeft();
-      view.render(game.getState());
-      break;
-    case 'ArrowRight':
-      game.movePieceRight();
-      view.render(game.getState());
-      break;
-    case 'ArrowUp':
-      game.rotatePiece();
-      view.render(game.getState());
-      break;
-  }
-});
